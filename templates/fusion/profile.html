@@ -1,0 +1,208 @@
+<!DOCTYPE html> {% load staticfiles %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <!-- <meta http-equiv="refresh" content="0;/fusion/home/"> -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/documentation.css" %}">
+    <link rel="stylesheet" href="{% static "css/light-bootstrap-dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "css/upload.css" %}">
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <title>Fusion - Home Page</title>
+    <style>
+        .img-responsive {
+            margin-top: 0px;
+            height: auto;
+            width: auto;
+            max-height: 72px;
+            max-width: 250px;
+            margin-left: 50px;
+        }
+
+        .profile-align {
+            margin-left: 0px;
+        }
+
+        .body-align {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="wrapper">
+            <div class="notifications-wrapper"></div>
+            <div class="sidebar" id="sidebar" data-color="black" data-image="background-image:url({% static "images/sidebar.jpg" %})">
+                <div class="sidebar-background" style="background-image:url({% static "images/sidebar.jpg" %});background-size: cover"></div>
+                <div class="logo">
+                    <a href="www.solivarlabs.com" class="simple-text logo-normal">
+                        <img class="img-responsive" src="{% static "images/logo.png" %}" alt="Logo of SolivarLabs">
+                    </a>
+                </div>
+                <div class="sidebar-wrapper">
+                    <ul class="nav">
+                        </li>
+                        <li>
+                            <a href="/fusion/home/" class="nav-link active">
+                                <i class="far fa-chart-bar"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#" class="nav-link active">
+                                <i class="fas fa-user-circle"></i>
+                                <p>User Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="main-panel" class="main-panel">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-brand">User Profile</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li role="presentation">
+                                    <a href="/fusion/accounts/logout/" role="button">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 user-details profile-align">
+                                <div class="user-image">
+                                    <img src="{{ profile_form.profile_picture }}" alt="{{ profile_form.user }}" title="{{ profile_form.user }}" class="img-circle"
+                                        width="100">
+                                </div>
+                                <div class="user-info-block">
+                                    <div class="user-heading">
+                                        <h3>{{ profile_form.user }}</h3>
+                                        <span class="help-block">uploaded {{profile_form.limit}} image(s)</span>
+                                        <button class="btn btn-primary" type="submit"><a href="/fusion/delete/">Delete History</a></button>
+                                    </div>
+                                    <hr>
+                                    <div class="user-body body-align" style="padding-top: 0">
+                                        <div class="tab-content">
+                                            <div id="information" class="tab-pane active container">
+                                                <center>
+                                                    <h4>Upload History</h4>
+                                                </center>
+                                                <div class="row">
+                                                    {% if profile_form.limit == 0 %}
+                                                        <center><strong>You haven't uploaded any images yet!</strong></center>
+                                                    {% else %}
+                                                    {% for upload in history %}
+                                                    <div class="col-md-5 text-center card">
+                                                        <div class="row" style="padding: 8px;">
+                                                            <div class="col-md-8">
+                                                                Uploaded on: <br>
+                                                                <strong>{{ upload.upload_time }}</strong>
+                                                                <br> Prediction : <br>
+                                                                <strong>{{ upload.prediction }}</strong>
+                                                                <br> Confidence :
+                                                                <strong>{{ upload.probability }}</strong> <br>
+                                                                <!-- <button type="button" pred="{{ upload.prediction }}" prob="{{ upload.probability }}" class="btn btn-info pie-chart" data-toggle="modal" data-target="#myModal">Display Chart</button> -->
+                                                                <a pred="{{ upload.prediction }}" prob="{{ upload.probability }}" class="pie-chart" data-toggle="modal" data-target="#myModal" href="#">View Chart</a>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <img src="{{ upload.chest_xray.url }}" alt="img" height="120" width="120" style="height: 120; border-radius: 4px; margin-left: 0; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div style="left:auto" class="modal-dialog align-items-center justify-content-center">
+              <!-- Modal content-->
+            <div class="modal-content" style="
+            height: auto;
+            width: 422px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div id="chart_div" class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>
+            </div>
+            </div>
+        </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://www.google.com/jsapi"></script>
+<script>
+          google.load('visualization', '1.0', {
+            'packages': ['corechart']
+          });
+          $('.pie-chart').click(
+              function () {
+                  var pred = $(this).attr("pred");
+                  var prob = $(this).attr("prob");
+                  prob = parseFloat(prob);
+                  var data = new google.visualization.DataTable();
+                  data.addColumn('string', 'Topping');
+                  data.addColumn('number', 'Slices');
+                  if (pred.length<30) {
+                      data.addRows([
+                          ['Cardiomegaly',prob],
+                          ['No Cardiomegaly',1-prob]
+                      ]
+                      )
+                  }
+                  else {
+                      data.addRows([
+                      ['No Cardiomegaly',prob],
+                      ["Cardiomegaly",1-prob]
+                      ]);
+                  }
+                
+                  // Set chart options
+                  var options = {
+                    'title': 'Confidence pie chart',
+                    'width': 400,
+                    'height': 300
+                  };
+                
+                  // Instantiate and draw our chart, passing in some options.
+                  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                  chart.draw(data, options);
+                  
+              }
+          );
+</script>
+</html>

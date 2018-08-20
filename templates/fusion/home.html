@@ -1,0 +1,203 @@
+<!DOCTYPE html> {% load staticfiles %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <meta http-equiv="refresh" content="0;/fusion/home/"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+        crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "css/documentation.css" %}">
+    <link rel="stylesheet" href="{% static "css/light-bootstrap-dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "css/upload.css" %}">
+    <title>Fusion - Home Page</title>
+    <style>
+        .img-responsive {
+            margin-top: 0px;
+            height: auto;
+            width: auto;
+            max-height: 72px;
+            max-width: 250px;
+            margin-left: 50px;
+        }
+        .chart-display {
+            margin-top: 10px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="wrapper">
+            <div class="notifications-wrapper"></div>
+            <div class="sidebar" id="sidebar" data-color="black" data-image="background-image:url({% static "images/sidebar.jpg" %})">
+                <div class="sidebar-background" style="background-image:url({% static "images/sidebar.jpg" %});background-size: cover"></div>
+                <div class="logo">
+                    <a href="www.solivarlabs.com" class="simple-text logo-normal">
+                        <img class="img-responsive" src="{% static "images/logo.png" %}" alt="Logo of SolivarLabs">
+                    </a>
+                </div>
+                <div class="sidebar-wrapper">
+                    <ul class="nav">
+                        </li>
+                        <li class="active">
+                            <a href="#" class="nav-link active">
+                                <i class="far fa-chart-bar"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/fusion/profile/" class="nav-link active">
+                                <i class="fas fa-user-circle"></i>
+                                <p>User Profile</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="main-panel" class="main-panel">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-brand">Dashboard</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li role="presentation">
+                                    <a href="/fusion/accounts/logout/" role="button">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h2>File Upload & Image Preview</h2>
+                            <form id="file-upload-form" class="uploader" enctype="multipart/form-data" method="POST" action="#">
+                                 {% csrf_token %}
+                                <input id="file-upload" type="file" name="fileUpload" acccept="image/*" />
+                                <label for="file-upload" id="file-drag">
+                                    <img id="file-image" src="#" alt="Preview" class="hidden">
+                                    <div id="start">
+                                        <i class="fa fa-download" aria-hidden="true" style="width: 50px;"></i>
+                                        <div>Select a file or drag here</div>
+                                        <div id="notimage" class="hidden">Please select an image</div>
+                                        <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                                        <!-- <button id="submit-btn" class="btn btn-primary">Submit</button> -->
+                                    </div>
+                                    <div id="response" class="hidden">
+                                        <div id="messages"></div>
+                                        <progress class="progress" id="file-progress" value="0">
+                                            <span>0</span>%
+                                        </progress>
+                                        <div>
+                                            <button id="" type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </label>
+                            </form>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            {% if uploaded %}
+                                <center>
+                                   <strong> {{ prediction }}</strong> <br>
+                                   <strong>confidence: {{ probability }}</strong> <br>
+                                   <strong>
+                                       <!-- <button id="btn" class="btn btn-primary">Display chart</button> -->
+                                       <button type="button" onclick="drawChart();" class="btn btn-info" data-toggle="modal" data-target="#myModal">Display Chart</button>
+                                       <!-- <a href="#" class="pie-chart" id="btn" onclick="drawChart();" data-toggle="model" data-target="#myModal">View Chart</a> -->
+                                   </strong>
+                                </center>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                        <div id="chart_1" style="margin-left: 275px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+            <div style="left:auto" class="modal-dialog align-items-center justify-content-center">
+                  <!-- Modal content-->
+                <div class="modal-content" style="
+                height: auto;
+                width: 422px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div id="chart_div" class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>
+                </div>
+                </div>
+            </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="{% static "js/upload.js" %}"></script>
+<script src="{% static "js/jquery-2.2.4.min.js" %}"></script>
+<!-- <script src="{% static "js/chart.js" %}"></script> -->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script>
+    google.load('visualization', '1.0', {
+        'packages': ['corechart']
+      });
+      
+      $(document).ready(function() {
+        $("#btn").on("click", function() {
+          drawChart();
+        });
+      });
+      // creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        var pred = "{{ prediction }}";
+        var prob = parseFloat("{{ probability }}")
+        if (pred.length<30) {
+            data.addRows([
+                ['Cardiomegaly',prob],
+                ['No Cardiomegaly',1-prob]
+            ]
+            )
+        }
+        else {
+            data.addRows([
+            ['No Cardiomegaly',prob],
+            ["Cardiomegaly",1-prob]
+            ]);
+        }
+      
+        // Set chart options
+        var options = {
+          'title': 'Confidence pie chart',
+          'width': 400,
+          'height': 300
+        };
+      
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        
+        // var chart2 = new google.visualization.BarChart(document.getElementById('chart_2'));
+        // chart2.draw(data, options);
+      }
+</script>
+</html>
