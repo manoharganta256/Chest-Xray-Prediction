@@ -1,4 +1,4 @@
-# Chest X-Ray Prediction
+# Cardiomegaly Prediction
 
 The main use of this application is prediction of exsistence of [cardiomegaly](https://en.wikipedia.org/wiki/Cardiomegaly) of a given X-Ray.
 I call this app Fusion. Fusion is a Django application which allows the user to upload image and it predicts the exsistance of [cardiomegaly](https://en.wikipedia.org/wiki/Cardiomegaly).
