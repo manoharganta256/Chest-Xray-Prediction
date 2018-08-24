@@ -9,9 +9,8 @@ from fusion.profile import image
 from fusion.models import UserProfile,Image
 # Create your views here.
 
-@login_required
 def start(request):
-    return HttpResponseRedirect('/fusion/home/')
+    return HttpResponseRedirect('/fusion/')
 def index(request):
     #context_dict = {'boldmessage': 'Manohar'}
     return render(request,'fusion/index.html')

@@ -72,7 +72,7 @@
                     {% if user.is_authenticated %}
                     <a href="/fusion/home/" class="btn btn-neutral btn-lg btn-round btn-fill">Home</a>
                     {% else %}
-                    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/" class="btn btn-neutral btn-lg btn-round btn-fill">Login</a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/fusion/home/" class="btn btn-neutral btn-lg btn-round btn-fill">Login</a>
                     {% endif %}
                     <!--<a href="{% url 'social:begin' 'google-oauth2' %}?next=/" class="btn btn-neutral btn-lg btn-round btn-fill">Login</a>-->
             </div>
