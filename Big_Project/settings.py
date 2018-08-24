@@ -123,11 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_PATH = os.path.join(BASE_DIR,'static')
-# STATICFILES_DIRS = [
-#     STATIC_PATH,
-# ]
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [
+    STATIC_PATH,
+]
+#STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.open_id.OpenIdAuth',
