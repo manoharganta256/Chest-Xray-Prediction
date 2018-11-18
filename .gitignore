@@ -1,1 +1,5 @@
 .vscode/*
+Big_Project/__pycache__/*
+fusion/__pycache__/*
+fusion/migrations/__pycache__/*
+*.sqlite3
