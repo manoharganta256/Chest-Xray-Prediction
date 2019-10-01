@@ -1,6 +1,6 @@
 # Cardiomegaly Prediction
 
-This application is used to predict of existence [cardiomegaly](https://en.wikipedia.org/wiki/Cardiomegaly) from the given X-Ray. I call this application Fusion.
+This application is used to predict the existence of [cardiomegaly](https://en.wikipedia.org/wiki/Cardiomegaly) from the given X-Ray. I call this application Fusion.
 
 # Features
 
